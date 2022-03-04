@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react'
 import styled from 'styled-components'
 
-import Modal from './Modal'
+import Modal from '../Modal'
+import BuggyCounter from './BuggyCounter'
+import ErrorBoundary from './ErrorBoundary'
 
 const Container = styled.div`
     text-align: center;
@@ -24,7 +26,7 @@ const ShowModalButton = styled.button`
 `
 
 function App() {
-    const [error, setError] = useState(null)
+    const [error, setError] = useState({})
     const onClose = useCallback(() => setError(null), [])
     const showModal = useCallback(() => setError('There was an error'), [])
 
@@ -38,6 +40,9 @@ function App() {
             </ul>
             <ShowModalButton onClick={showModal}>Show Modal</ShowModalButton>
             <Modal show={error !== null} onClose={onClose} />
+            <ErrorBoundary>
+                <BuggyCounter />
+            </ErrorBoundary>
         </Container>
     )
 }
